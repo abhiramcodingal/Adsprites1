@@ -1,5 +1,6 @@
 import pygame
 import random
+from time import sleep
 
 pygame.init()
 #surface1 = pygame.display.set_mode((640,480))
@@ -34,18 +35,19 @@ class Sprite(pygame.sprite.Sprite):
         if boundary_hit == True:
             pygame.event.post(pygame.event.Event(SPR_CLR_CHANGE))
             pygame.event.post(pygame.event.Event(BG_CLR_CHANGE))
+    
     def change_color(self):
         self.image.fill(random.choice([YELLOW,MAGENTA,ORANGE,WHITE]))
     
-def bg_change_color():
-    global bg_color
-    bg_color = random.choice(random.choice([BLUE,D_BLUE,PINK,RED]))
+    def bg_change_color(self):
+        global bg_color
+        bg_color = random.choice(random.choice([PINK,RED]))
     
 all_spr_lst = pygame.sprite.Group()
         
 surface1 = pygame.display.set_mode((500,500))
 pygame.display.set_caption("My Screen with Sprites")
-bg_color = BLUE
+bg_color = PINK
 surface1.fill(bg_color)
 
 all_spr_lst = pygame.sprite.Group()
@@ -65,13 +67,14 @@ while not done:
         elif event.type == SPR_CLR_CHANGE:
             sp1.change_color()
         elif event.type == BG_CLR_CHANGE:
-            bg_change_color()
+            sp1.bg_change_color()
+            print(bg_color)
     
     all_spr_lst.update()
     surface1.fill(bg_color)
     all_spr_lst.draw(surface1)
     
     pygame.display.flip()
-    clock.tick(240)
+    clock.tick(300)
 
 pygame.quit()   
