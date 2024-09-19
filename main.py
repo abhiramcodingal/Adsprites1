@@ -39,22 +39,20 @@ class Sprite(pygame.sprite.Sprite):
     def change_color(self):
         self.image.fill(random.choice([YELLOW,MAGENTA,ORANGE,WHITE]))
     
-    def bg_change_color(self):
-        global bg_color
-        bg_color = random.choice(random.choice([PINK,RED]))
-    
-all_spr_lst = pygame.sprite.Group()
+def bg_change_color():
+    global bg_color
+    bg_color = random.choice([PINK,RED,BLUE,D_BLUE])   
         
-surface1 = pygame.display.set_mode((500,500))
-pygame.display.set_caption("My Screen with Sprites")
-bg_color = PINK
-surface1.fill(bg_color)
-
 all_spr_lst = pygame.sprite.Group()
 sp1 = Sprite(WHITE,20,30)
 sp1.rect.x = random.randint(0,480)
 sp1.rect.y = random.randint(0,480)
 all_spr_lst.add(sp1)
+
+surface1 = pygame.display.set_mode((500,500))
+pygame.display.set_caption("My Screen with Sprites")
+bg_color = PINK
+surface1.fill(bg_color)
 
 done = False
 
@@ -67,14 +65,13 @@ while not done:
         elif event.type == SPR_CLR_CHANGE:
             sp1.change_color()
         elif event.type == BG_CLR_CHANGE:
-            sp1.bg_change_color()
-            print(bg_color)
-    
+            bg_change_color()
+                
     all_spr_lst.update()
     surface1.fill(bg_color)
     all_spr_lst.draw(surface1)
     
     pygame.display.flip()
-    clock.tick(300)
+    clock.tick(400)
 
 pygame.quit()   
